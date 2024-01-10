@@ -1,0 +1,318 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "applicant",
+    "description": "Applicant page",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api"
+    }
+  ],
+  "paths": {
+    "/applicants": {
+      "get": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
+        "tags": ["applicant API"],
+        "description": "list all Applicant",
+        "summary": "List All Applicant",
+        "responses": {
+          "200": {
+            "description": "Success get all applicant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "event_name": {
+                            "type": "string"
+                          },
+                          "date_event": {
+                            "type": "string"
+                          },
+                          "event_venues": {
+                            "type": "string"
+                          },
+                          "requirement_materials": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
+        "tags": ["Applicant API"],
+        "description": "Create New Applicant",
+        "summary": "Create new applicant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event_name": {
+                    "type": "string"
+                  },"date_event ": {
+                    "type": "string"
+                  },"event_venues": {
+                    "type": "string"
+                  },
+                  "requirement_materials": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "Success Create Applicant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "event_name": {
+                            "type": "string"
+                          },
+                          "date_event": {
+                            "type": "string"
+                          },
+                          "event_venues": {
+                            "type": "string"
+                          },
+                          "requirement_materials": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applicants/{applicantId}": {
+      "get": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
+        "tags": ["applicant API"],
+        "summary": "Get applicant by Id",
+        "description": "Get applicant by Id",
+        "parameters": [{
+          "name": "applicantId",
+          "in": "path",
+          "description": "Applicant id"
+        }],
+        "responses": {
+          "200": {
+            "description": "success get applicant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "event_name": {
+                            "type": "string"
+                          },
+                          "date_event": {
+                            "type": "string"
+                          },
+                          "event_venues": {
+                            "type": "string"
+                          },
+                          "requirement_materials": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
+        "tags": ["applicant API"],
+        "summary": "Update applicant by Id",
+        "description": "Update applicant by Id",
+        "parameters": [{
+          "name": "applicantId",
+          "in": "path",
+          "description": "Applicant id"
+        }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event_name": {
+                    "type": "string"
+                  },"date_event ": {
+                    "type": "string"
+                  },"event_venues": {
+                    "type": "string"
+                  },
+                  "requirement_materials": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success get applicant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "event_name": {
+                            "type": "string"
+                          },
+                          "date_event": {
+                            "type": "string"
+                          },
+                          "event_venues": {
+                            "type": "string"
+                          },
+                          "requirement_materials": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
+        "tags": ["applicant API"],
+        "summary": "Delete applicant by id",
+        "description": "Delete applicant by id",
+        "parameters": [{
+          "name": "applicantId",
+          "in": "path",
+          "description": "Applicant id"
+        }],
+        "responses": {
+          "200": {
+            "description": "success get applicant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApplicantAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name" : "X-API-KEY",
+        "description": "Authentication for Application API"
+      }
+    }
+  }
+}
