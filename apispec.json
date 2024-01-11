@@ -7,15 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/api"
+      "url": "http://localhost:3000/api"
     }
   ],
   "paths": {
     "/applicants": {
       "get": {
-        "security": [{
-          "ApplicantAuth": []
-        }],
         "tags": ["applicant API"],
         "description": "list all Applicant",
         "summary": "List All Applicant",
@@ -41,16 +38,16 @@
                           "id": {
                             "type": "number"
                           },
-                          "event_name": {
+                          "EventName": {
                             "type": "string"
                           },
-                          "date_event": {
+                          "Date": {
                             "type": "string"
                           },
-                          "event_venues": {
+                          "EventVenues": {
                             "type": "string"
                           },
-                          "requirement_materials": {
+                          "RequeirementMaterials": {
                             "type": "string"
                           }
                         }
@@ -64,9 +61,6 @@
         }
       },
       "post": {
-        "security": [{
-          "ApplicantAuth": []
-        }],
         "tags": ["Applicant API"],
         "description": "Create New Applicant",
         "summary": "Create new applicant",
@@ -76,14 +70,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "event_name": {
+                  "EventName": {
                     "type": "string"
-                  },"date_event ": {
+                  },"Date": {
                     "type": "string"
-                  },"event_venues": {
+                  },"EventVenues": {
                     "type": "string"
                   },
-                  "requirement_materials": {
+                  "RequeirementMaterials": {
                     "type": "string"
                   }
                 }
@@ -113,16 +107,16 @@
                           "id": {
                             "type": "number"
                           },
-                          "event_name": {
+                          "EventName": {
                             "type": "string"
                           },
-                          "date_event": {
+                          "Date": {
                             "type": "string"
                           },
-                          "event_venues": {
+                          "EventVenues": {
                             "type": "string"
                           },
-                          "requirement_materials": {
+                          "RequeirementMaterials": {
                             "type": "string"
                           }
                         }
@@ -138,9 +132,6 @@
     },
     "/applicants/{applicantId}": {
       "get": {
-        "security": [{
-          "ApplicantAuth": []
-        }],
         "tags": ["applicant API"],
         "summary": "Get applicant by Id",
         "description": "Get applicant by Id",
@@ -171,16 +162,16 @@
                           "id": {
                             "type": "number"
                           },
-                          "event_name": {
+                          "EventName": {
                             "type": "string"
                           },
-                          "date_event": {
+                          "Date": {
                             "type": "string"
                           },
-                          "event_venues": {
+                          "EventVenues": {
                             "type": "string"
                           },
-                          "requirement_materials": {
+                          "RequeirementMaterials": {
                             "type": "string"
                           }
                         }
@@ -194,9 +185,6 @@
         }
       },
       "put": {
-        "security": [{
-          "ApplicantAuth": []
-        }],
         "tags": ["applicant API"],
         "summary": "Update applicant by Id",
         "description": "Update applicant by Id",
@@ -211,14 +199,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "event_name": {
+                  "EventName": {
                     "type": "string"
-                  },"date_event ": {
+                  },"Date": {
                     "type": "string"
-                  },"event_venues": {
+                  },"EventVenues": {
                     "type": "string"
                   },
-                  "requirement_materials": {
+                  "RequeirementMaterials": {
                     "type": "string"
                   }
                 }
@@ -248,16 +236,16 @@
                           "id": {
                             "type": "number"
                           },
-                          "event_name": {
+                          "EventName": {
                             "type": "string"
                           },
-                          "date_event": {
+                          "Date": {
                             "type": "string"
                           },
-                          "event_venues": {
+                          "EventVenues": {
                             "type": "string"
                           },
-                          "requirement_materials": {
+                          "RequeirementMaterials": {
                             "type": "string"
                           }
                         }
@@ -271,9 +259,6 @@
         }
       },
       "delete": {
-        "security": [{
-          "ApplicantAuth": []
-        }],
         "tags": ["applicant API"],
         "summary": "Delete applicant by id",
         "description": "Delete applicant by id",

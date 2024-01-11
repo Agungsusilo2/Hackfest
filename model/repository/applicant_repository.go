@@ -7,9 +7,9 @@ import (
 )
 
 type ApplicantRepository interface {
-	Save(ctx context.Context, tx sql.Tx, applicant domain.Category) domain.Category
-	Update(ctx context.Context, tx sql.Tx, applicant domain.Category) domain.Category
-	Delete(ctx context.Context, tx sql.Tx, applicant domain.Category)
-	FindById(ctx context.Context, tx sql.Tx, applicantId int) domain.Category
-	FindByAll(ctx context.Context) []domain.Category
+	Save(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) domain.Applicant
+	Update(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) domain.Applicant
+	Delete(ctx context.Context, tx *sql.Tx, applicant domain.Applicant)
+	FindById(ctx context.Context, tx *sql.Tx, applicantId int) (domain.Applicant, error)
+	FindByAll(ctx context.Context, tx *sql.Tx) []domain.Applicant
 }

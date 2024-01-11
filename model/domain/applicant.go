@@ -1,6 +1,6 @@
 package domain
 
-type Category struct {
+type Applicant struct {
 	Id                    int32
 	EventName             string
 	Date                  string
