@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"github.com/Agungsusilo2/Hackfest/model/helper"
 	"github.com/Agungsusilo2/Hackfest/model/web"
+	"github.com/joho/godotenv"
 	"net/http"
+	"os"
 )
 
 type MiddlewareAuth struct {
@@ -12,7 +14,10 @@ type MiddlewareAuth struct {
 }
 
 func (a MiddlewareAuth) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	if "Pukulele" == request.Header.Get("X-API-KEY") {
+	err := godotenv.Load()
+	helper.PanicErr(err)
+
+	if os.Getenv("X-API-KEY") == request.Header.Get("X-API-KEY") {
 		a.Handler.ServeHTTP(writer, request)
 	} else {
 		writer.Header().Set("Content-Type", "application/json")
