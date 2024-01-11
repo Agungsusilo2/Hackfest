@@ -13,6 +13,9 @@
   "paths": {
     "/applicants": {
       "get": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
         "tags": ["applicant API"],
         "description": "list all Applicant",
         "summary": "List All Applicant",
@@ -61,6 +64,9 @@
         }
       },
       "post": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
         "tags": ["Applicant API"],
         "description": "Create New Applicant",
         "summary": "Create new applicant",
@@ -132,6 +138,9 @@
     },
     "/applicants/{applicantId}": {
       "get": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
         "tags": ["applicant API"],
         "summary": "Get applicant by Id",
         "description": "Get applicant by Id",
@@ -185,6 +194,9 @@
         }
       },
       "put": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
         "tags": ["applicant API"],
         "summary": "Update applicant by Id",
         "description": "Update applicant by Id",
@@ -259,6 +271,9 @@
         }
       },
       "delete": {
+        "security": [{
+          "ApplicantAuth": []
+        }],
         "tags": ["applicant API"],
         "summary": "Delete applicant by id",
         "description": "Delete applicant by id",

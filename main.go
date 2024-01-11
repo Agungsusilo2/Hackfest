@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/Agungsusilo2/Hackfest/model/app"
 	"github.com/Agungsusilo2/Hackfest/model/controller"
+	"github.com/Agungsusilo2/Hackfest/model/middleware"
 	"github.com/Agungsusilo2/Hackfest/model/repository"
 	"github.com/Agungsusilo2/Hackfest/model/service"
 	"github.com/go-playground/validator"
@@ -27,7 +28,7 @@ func main() {
 	router.DELETE("/api/applicants/:applicantId", categoryController.Delete)
 
 	server := http.Server{Addr: "localhost:3000",
-		Handler: router}
+		Handler: middleware.NewMiddlewareAuth(router)}
 
 	err := server.ListenAndServe()
 	if err != nil {
