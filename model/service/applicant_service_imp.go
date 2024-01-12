@@ -16,9 +16,9 @@ type ApplicantServiceImp struct {
 	Validate              *validator.Validate
 }
 
-func NewApplicationService(categoryRepository repository.ApplicantRepository, DB *sql.DB, validate *validator.Validate) *ApplicantServiceImp {
+func NewApplicationts(applicationRepository repository.ApplicantRepository, DB *sql.DB, validate *validator.Validate) ApplicantService {
 	return &ApplicantServiceImp{
-		ApplicationRepository: categoryRepository,
+		ApplicationRepository: applicationRepository,
 		DB:                    DB,
 		Validate:              validate,
 	}
@@ -43,37 +43,32 @@ func (a *ApplicantServiceImp) Create(ctx context.Context, request web.ApplicantC
 	return helper.ToApplicantResponse(applicant)
 }
 
-func (a ApplicantServiceImp) Update(ctx context.Context, updateReq web.ApplicantUpdateReq) web.ApplicantResponse {
-	err := a.Validate.Struct(updateReq)
-	helper.PanicErr(err)
-	tx, err := a.DB.Begin()
-	helper.PanicErr(err)
+func (service *ApplicantServiceImp) Update(ctx context.Context, request web.ApplicantUpdateReq) (web.ApplicantResponse, error) {
+	err := service.Validate.Struct(request)
+	if err != nil {
+		return web.ApplicantResponse{}, err
+	}
+
+	tx, err := service.DB.Begin()
+	if err != nil {
+		return web.ApplicantResponse{}, err
+	}
 	defer helper.ErrorTx(tx)
 
-	applicant, err := a.ApplicationRepository.FindById(ctx, tx, updateReq.Id)
+	applicant, err := service.ApplicationRepository.FindById(ctx, tx, request.Id)
+	if err != nil {
+		return web.ApplicantResponse{}, err
+	}
 
-	applicant.EventName = updateReq.EventName
-	applicant.Date = updateReq.Date
-	applicant.EventVenues = updateReq.EventVenues
-	applicant.RequeirementMaterials = updateReq.RequeirementMaterials
+	applicant.EventName = request.EventName
+	applicant.Date = request.Date
+	applicant.EventVenues = request.EventVenues
+	applicant.RequeirementMaterials = request.RequeirementMaterials
 
-	applicant = a.ApplicationRepository.Update(ctx, tx, applicant)
-
-	return helper.ToApplicantResponse(applicant)
+	return helper.ToApplicantResponse(applicant), nil
 }
 
-func (a ApplicantServiceImp) Delete(ctx context.Context, ApplicantId int) {
-	tx, err := a.DB.Begin()
-	helper.PanicErr(err)
-	defer helper.ErrorTx(tx)
-
-	applicant, err := a.ApplicationRepository.FindById(ctx, tx, ApplicantId)
-	helper.PanicErr(err)
-
-	a.ApplicationRepository.Delete(ctx, tx, applicant)
-}
-
-func (a ApplicantServiceImp) FindAll(ctx context.Context) []web.ApplicantResponse {
+func (a *ApplicantServiceImp) FindAll(ctx context.Context) []web.ApplicantResponse {
 	tx, err := a.DB.Begin()
 	helper.PanicErr(err)
 	defer helper.ErrorTx(tx)
@@ -89,7 +84,7 @@ func (a ApplicantServiceImp) FindAll(ctx context.Context) []web.ApplicantRespons
 	return applicantResponses
 }
 
-func (a ApplicantServiceImp) FindById(ctx context.Context, ApplicantId int) web.ApplicantResponse {
+func (a *ApplicantServiceImp) FindById(ctx context.Context, ApplicantId int) web.ApplicantResponse {
 	tx, err := a.DB.Begin()
 	helper.PanicErr(err)
 	defer helper.ErrorTx(tx)
@@ -98,4 +93,19 @@ func (a ApplicantServiceImp) FindById(ctx context.Context, ApplicantId int) web.
 	helper.PanicErr(err)
 
 	return helper.ToApplicantResponse(applicant)
+}
+
+func (a *ApplicantServiceImp) Delete(ctx context.Context, applicantId int) error {
+	tx, err := a.DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer helper.ErrorTx(tx)
+
+	err = a.ApplicationRepository.Delete(ctx, tx, applicantId)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

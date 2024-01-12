@@ -16,7 +16,7 @@ func main() {
 	db := app.GetConnection()
 	validate := validator.New()
 	applicationRepository := repository.NewCategoryRepository()
-	applicationService := service.NewApplicationService(applicationRepository, db, validate)
+	applicationService := service.NewApplicationts(applicationRepository, db, validate)
 	categoryController := controller.NewCategoryController(applicationService)
 
 	router := httprouter.New()

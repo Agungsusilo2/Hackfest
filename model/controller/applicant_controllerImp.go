@@ -42,36 +42,64 @@ func (a *ApplicantControllerImp) Update(writer http.ResponseWriter, request *htt
 	decoder := json.NewDecoder(request.Body)
 	applicantUpdateReq := web.ApplicantUpdateReq{}
 	err := decoder.Decode(&applicantUpdateReq)
-	helper.PanicErr(err)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-	var categoryId = params.ByName("applicantId")
-	id, err := strconv.Atoi(categoryId)
-	helper.PanicErr(err)
+	applicantIDStr := params.ByName("applicantId")
+	applicantID, err := strconv.Atoi(applicantIDStr)
+	if err != nil {
+		http.Error(writer, "Invalid applicant ID", http.StatusBadRequest)
+		return
+	}
 
-	applicantUpdateReq.Id = id
+	applicantUpdateReq.Id = applicantID
 
-	applicantResponse := a.ApplicantService.Update(request.Context(), applicantUpdateReq)
+	applicantResponse, err := a.ApplicantService.Update(request.Context(), applicantUpdateReq)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	responseTemp := web.ResponseTemp{
 		Code:   200,
 		Status: "OK",
 		Data:   applicantResponse,
 	}
-	writer.Header().Add("Content-Type", "application/json")
+
+	writer.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(writer)
 	err = encoder.Encode(responseTemp)
-	helper.PanicErr(err)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (a *ApplicantControllerImp) Delete(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
-
 	var categoryId = params.ByName("applicantId")
 	id, err := strconv.Atoi(categoryId)
 	helper.PanicErr(err)
 
-	a.ApplicantService.Delete(request.Context(), id)
+	err = a.ApplicantService.Delete(request.Context(), id)
+	if err != nil {
+		responseTemp := web.ResponseTemp{
+			Code:   500,
+			Status: "Internal Server Error",
+			Data:   nil,
+		}
+		writer.Header().Add("Content-Type", "application/json")
+		encoder := json.NewEncoder(writer)
+		err := encoder.Encode(responseTemp)
+		helper.PanicErr(err)
+		return
+	}
+
 	responseTemp := web.ResponseTemp{
 		Code:   200,
 		Status: "OK",
+		Data:   nil,
 	}
 	writer.Header().Add("Content-Type", "application/json")
 	encoder := json.NewEncoder(writer)

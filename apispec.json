@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "applicant",
-    "description": "Applicant page",
+    "title": "Applicant API",
+    "description": "API Applicant Spec API",
     "version": "1.0.0"
   },
   "servers": [
@@ -14,14 +14,16 @@
     "/applicants": {
       "get": {
         "security": [{
-          "ApplicantAuth": []
+          "ApplicantAuth" : []
         }],
-        "tags": ["applicant API"],
-        "description": "list all Applicant",
-        "summary": "List All Applicant",
+        "tags": [
+          "Applicant API"
+        ],
+        "description": "List all Applicants",
+        "summary": "List all Applicants",
         "responses": {
           "200": {
-            "description": "Success get all applicant",
+            "description": "Success get all Applicants",
             "content": {
               "application/json": {
                 "schema": {
@@ -33,27 +35,10 @@
                     "status": {
                       "type": "string"
                     },
-                    "data" : {
+                    "data": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "EventName": {
-                            "type": "string"
-                          },
-                          "Date": {
-                            "type": "string"
-                          },
-                          "EventVenues": {
-                            "type": "string"
-                          },
-                          "RequeirementMaterials": {
-                            "type": "string"
-                          }
-                        }
+                        "$ref": "#/components/schemas/Applicant"
                       }
                     }
                   }
@@ -65,68 +50,36 @@
       },
       "post": {
         "security": [{
-          "ApplicantAuth": []
+          "ApplicantAuth" : []
         }],
         "tags": ["Applicant API"],
-        "description": "Create New Applicant",
-        "summary": "Create new applicant",
+        "description": "Create new Applicant",
+        "summary": "Create new Applicant",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "EventName": {
-                    "type": "string"
-                  },"Date": {
-                    "type": "string"
-                  },"EventVenues": {
-                    "type": "string"
-                  },
-                  "RequeirementMaterials": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/CreateOrUpdateApplicant"
               }
             }
           }
         },
         "responses": {
-          "200" : {
+          "200": {
             "description": "Success Create Applicant",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "code" : {
                       "type": "number"
                     },
-                    "status": {
+                    "status" : {
                       "type": "string"
                     },
                     "data" : {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "EventName": {
-                            "type": "string"
-                          },
-                          "Date": {
-                            "type": "string"
-                          },
-                          "EventVenues": {
-                            "type": "string"
-                          },
-                          "RequeirementMaterials": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/Applicant"
                     }
                   }
                 }
@@ -136,55 +89,37 @@
         }
       }
     },
-    "/applicants/{applicantId}": {
-      "get": {
+    "/applicants/{applicantId}" : {
+      "get" : {
         "security": [{
-          "ApplicantAuth": []
+          "ApplicantAuth" : []
         }],
-        "tags": ["applicant API"],
+        "tags": ["Applicant API"],
         "summary": "Get applicant by Id",
-        "description": "Get applicant by Id",
-        "parameters": [{
-          "name": "applicantId",
-          "in": "path",
-          "description": "Applicant id"
-        }],
+        "description": "Get applicant by id",
+        "parameters": [
+          {
+            "name": "applicantId",
+            "in": "path",
+            "description": "Applicant Id"
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "success get applicant",
+          "200" : {
+            "description": "Success get applicant",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "code" : {
                       "type": "number"
                     },
-                    "status": {
+                    "status" : {
                       "type": "string"
                     },
                     "data" : {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "EventName": {
-                            "type": "string"
-                          },
-                          "Date": {
-                            "type": "string"
-                          },
-                          "EventVenues": {
-                            "type": "string"
-                          },
-                          "RequeirementMaterials": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/Applicant"
                     }
                   }
                 }
@@ -193,75 +128,45 @@
           }
         }
       },
-      "put": {
+      "put" : {
         "security": [{
-          "ApplicantAuth": []
+          "ApplicantAuth" : []
         }],
-        "tags": ["applicant API"],
+        "tags": ["Applicant API"],
         "summary": "Update applicant by Id",
         "description": "Update applicant by Id",
-        "parameters": [{
-          "name": "applicantId",
-          "in": "path",
-          "description": "Applicant id"
-        }],
+        "parameters": [
+          {
+            "name": "applicantId",
+            "in": "path",
+            "description": "Applicant Id"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "EventName": {
-                    "type": "string"
-                  },"Date": {
-                    "type": "string"
-                  },"EventVenues": {
-                    "type": "string"
-                  },
-                  "RequeirementMaterials": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/CreateOrUpdateApplicant"
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "description": "success get applicant",
+          "200" : {
+            "description": "Success get applicant",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "code" : {
                       "type": "number"
                     },
-                    "status": {
+                    "status" : {
                       "type": "string"
                     },
                     "data" : {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "EventName": {
-                            "type": "string"
-                          },
-                          "Date": {
-                            "type": "string"
-                          },
-                          "EventVenues": {
-                            "type": "string"
-                          },
-                          "RequeirementMaterials": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/Applicant"
                     }
                   }
                 }
@@ -272,28 +177,30 @@
       },
       "delete": {
         "security": [{
-          "ApplicantAuth": []
+          "ApplicantAuth" : []
         }],
-        "tags": ["applicant API"],
-        "summary": "Delete applicant by id",
+        "tags": ["Applicant API"],
+        "summary": "Delete applicant by Id",
         "description": "Delete applicant by id",
-        "parameters": [{
-          "name": "applicantId",
-          "in": "path",
-          "description": "Applicant id"
-        }],
+        "parameters": [
+          {
+            "name": "applicantId",
+            "in": "path",
+            "description": "Applicant Id"
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "success get applicant",
+          "200" : {
+            "description": "Success delete applicant",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "code" : {
                       "type": "number"
                     },
-                    "status": {
+                    "status" : {
                       "type": "string"
                     }
                   }
@@ -307,11 +214,50 @@
   },
   "components": {
     "securitySchemes": {
-      "ApplicantAuth": {
+      "ApplicantAuth" : {
         "type": "apiKey",
-        "in": "header",
-        "name" : "X_API_KEY",
-        "description": "Authentication for Application API"
+        "in" : "header",
+        "name": "X-API-Key",
+        "description": "Authentication for Applicant API"
+      }
+    },
+    "schemas": {
+      "CreateOrUpdateApplicant" : {
+        "type": "object",
+        "properties": {
+            "EventName": {
+            "type": "string"
+          },
+          "EventVenues": {
+            "type": "string"
+          },
+          "RequeirementMaterials": {
+            "type": "string"
+          },
+          "Date": {
+            "type": "string"
+          }
+        }
+      },
+      "Applicant" : {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "EventName": {
+            "type": "string"
+          },
+          "EventVenues": {
+            "type": "string"
+          },
+          "RequeirementMaterials": {
+            "type": "string"
+          },
+          "Date": {
+            "type": "string"
+          }
+        }
       }
     }
   }

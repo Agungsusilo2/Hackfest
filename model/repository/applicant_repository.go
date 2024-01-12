@@ -8,8 +8,8 @@ import (
 
 type ApplicantRepository interface {
 	Save(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) domain.Applicant
-	Update(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) domain.Applicant
-	Delete(ctx context.Context, tx *sql.Tx, applicant domain.Applicant)
 	FindById(ctx context.Context, tx *sql.Tx, applicantId int) (domain.Applicant, error)
 	FindByAll(ctx context.Context, tx *sql.Tx) []domain.Applicant
+	Delete(ctx context.Context, tx *sql.Tx, applicantId int) error
+	Update(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) domain.Applicant
 }

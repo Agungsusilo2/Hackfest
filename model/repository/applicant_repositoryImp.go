@@ -29,24 +29,12 @@ func (a *ApplicantRepositoryImp) Save(ctx context.Context, tx *sql.Tx, applicant
 	return applicant
 }
 
-func (a *ApplicantRepositoryImp) Update(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) domain.Applicant {
+func (repository *ApplicantRepositoryImp) Update(ctx context.Context, tx *sql.Tx, category domain.Applicant) domain.Applicant {
 	script := "UPDATE applicant SET event_name=?, date_name=?, event_venues=?, requeirement_materials=? WHERE id=?"
-	prep, err := tx.PrepareContext(ctx, script)
+	_, err := tx.ExecContext(ctx, script, category.EventName, category.Date, category.EventVenues, category.EventVenues, category.Id)
 	helper.PanicErr(err)
-	defer prep.Close()
-	_, err = prep.ExecContext(ctx, applicant.EventName, applicant.Date, applicant.EventVenues,
-		applicant.RequeirementMaterials, applicant.Id)
 
-	return applicant
-}
-
-func (a *ApplicantRepositoryImp) Delete(ctx context.Context, tx *sql.Tx, applicant domain.Applicant) {
-	script := "DELETE FROM applicant WHERE id = ? LIMIT 1"
-	prep, err := tx.PrepareContext(ctx, script)
-	helper.PanicErr(err)
-	defer prep.Close()
-	_, err = prep.ExecContext(ctx, applicant.Id)
-	helper.PanicErr(err)
+	return category
 }
 
 func (a *ApplicantRepositoryImp) FindById(ctx context.Context, tx *sql.Tx, applicantId int) (domain.Applicant, error) {
@@ -82,4 +70,20 @@ func (a ApplicantRepositoryImp) FindByAll(ctx context.Context, tx *sql.Tx) []dom
 		applicants = append(applicants, applicant)
 	}
 	return applicants
+}
+
+func (i *ApplicantRepositoryImp) Delete(ctx context.Context, tx *sql.Tx, applicantId int) error {
+	script := "DELETE FROM applicant WHERE id = ? LIMIT 1"
+	prep, err := tx.PrepareContext(ctx, script)
+	if err != nil {
+		return err
+	}
+	defer prep.Close()
+
+	_, err = prep.ExecContext(ctx, applicantId)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
